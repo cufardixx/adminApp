@@ -7,6 +7,7 @@ import cors from "cors"
 
 const app = express()
 connectDB()
+app.use(express.json())
 app.use(cors())
 const PORT = process.env.PORT || 4000
 

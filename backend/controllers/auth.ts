@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import sendEmail from "../helpers/mailer";
 import UserModel from "../models/user";
 import generarCodigoDeValidacion from "../helpers/generadorCode";
+import jwt from "jsonwebtoken"
 
 export const login = async (req: Request, res: Response) => {
     const { email } = req.params;
@@ -19,7 +20,11 @@ export const login = async (req: Request, res: Response) => {
         console.error(error);
         return res.status(500).json({ ok: false, message: "Error interno del servidor" });
     }
+    res.cookie("JWT", process.env.TOKEN_SECRET)
 };
+
+
+
 
 export const generateCode = async (req: Request, res: Response) => {
     const { email } = req.params;

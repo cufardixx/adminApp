@@ -3,8 +3,9 @@ import Link from "next/link";
 
 import styles from "./index.module.css";
 import { env } from "~/env";
-import { Button } from "@chakra-ui/react";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 import { Router, useRouter } from "next/router";
+import axios from "axios";
 
 export default function Home() {
   const router = useRouter()
@@ -20,11 +21,20 @@ export default function Home() {
           <h1 className={styles.title}>
             {env.NEXT_PUBLIC_BACKEND_BASE_URL}
           </h1>
+          <ButtonGroup>
           <Button colorScheme='blue' 
           onClick={()=>{
             router.push('/login')
           }}>
             Button</Button>
+          
+          <Button colorScheme='blue' 
+          onClick={()=>{
+            axios.get(`${env.NEXT_PUBLIC_BACKEND_BASE_URL}/panel`)
+          }}>
+            Panel</Button>
+
+          </ButtonGroup>
         </div>
       </main>
     </>

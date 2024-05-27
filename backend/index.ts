@@ -3,10 +3,12 @@ import 'dotenv/config'
 import routers from "./routes"
 import connectDB from "./db/connect"
 import cors from "cors"
+import cookieparser from "cookie-parser"
 
 
 const app = express()
 connectDB()
+app.use(cookieparser())
 app.use(express.json())
 app.use(cors())
 const PORT = process.env.PORT || 4000

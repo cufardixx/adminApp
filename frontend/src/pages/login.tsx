@@ -6,15 +6,22 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { env } from "~/env";
 import swal from "sweetalert2"
+import z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 
-interface TypeBody{
-    email: string
-    code: string
-}
+
+const schema = z.object({
+    email: z.string().email("Email invalido"),
+    code: z.string().length(4, "La longitud del código debe ser 4")
+})
+
+type TypeBody = z.infer<typeof schema>
 
 const Login: NextPage = () => {
-    const { register, handleSubmit, formState: { errors }, getValues } = useForm<TypeBody>();
+    const { register, handleSubmit, formState: { errors }, getValues } = useForm<TypeBody>({
+        resolver: zodResolver(schema)
+    });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
@@ -78,7 +85,6 @@ const Login: NextPage = () => {
                                 colorScheme='teal'
                                 variant='solid'
                                 type="submit"
-                                isLoading={loading}
                                 loadingText="Iniciando sesión"
                             >
                                 Iniciar sesión

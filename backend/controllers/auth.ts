@@ -4,6 +4,7 @@ import UserModel from "../models/user";
 import generarCodigoDeValidacion from "../helpers/generadorCode";
 import jwt from "jsonwebtoken"
 
+
 export const login = async (req: Request, res: Response) => {
     const { email } = req.params;
     const { code } = req.body;
@@ -14,13 +15,22 @@ export const login = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(400).json({ ok: false, message: "Credenciales inválidas" });
         }
+        const token = jwt.sign(
+            {   sub: user._id,
+                firstname: user.firstname,
+                lastname:user.lastname,
+                rol: user.roles
+            }
+            , process.env.TOKEN_SECRET as string  )
+
+        res.cookie("jwt", token)
 
         return res.status(200).json({ ok: true, message: "Inicio de sesión correcto" });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ ok: false, message: "Error interno del servidor" });
     }
-    res.cookie("JWT", process.env.TOKEN_SECRET)
+    
 };
 
 

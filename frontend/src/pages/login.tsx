@@ -30,7 +30,7 @@ const Login: NextPage = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.post(`${env.NEXT_PUBLIC_BACKEND_BASE_URL}/auth/login/${email}/`, { code });
+            const response = await axios.post(`${env.NEXT_PUBLIC_BACKEND_BASE_URL}/auth/login/${email}/`, { code }, {withCredentials: true});
             router.push("/");
         } catch (err) {
             setError("Error al iniciar sesión. Por favor, verifica tus credenciales.");

@@ -30,7 +30,7 @@ export default function Home() {
           
           <Button colorScheme='blue' 
           onClick={()=>{
-            axios.get(`${env.NEXT_PUBLIC_BACKEND_BASE_URL}/panel`)
+            axios.get(`${env.NEXT_PUBLIC_BACKEND_BASE_URL}/panel`, {withCredentials: true})
           }}>
             Panel</Button>
 
